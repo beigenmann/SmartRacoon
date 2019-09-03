@@ -17,10 +17,10 @@
         </activity>
 
         <service
-            android:name=".SmartRacoonService"/>
+            android:name="SmartRacoonService"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="net.osmand.osmandapidemo.fileprovider"
+            android:authorities="com.smartracoon.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
