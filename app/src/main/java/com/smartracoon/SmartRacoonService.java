@@ -138,7 +138,7 @@ public class SmartRacoonService extends Service {
         notificationBuilder
                 .setContent(remoteViews)
                 .setContentText("SmartRacoon")
-                .setSmallIcon(R.drawable.ic_rocketracoon)
+                .setSmallIcon(R.drawable.ic_racoon)
                 .setCategory(NotificationCompat.CATEGORY_SERVICE)
                 .setOnlyAlertOnce(true)
                 .setOngoing(true)
