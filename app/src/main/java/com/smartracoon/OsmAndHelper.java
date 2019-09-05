@@ -10,7 +10,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -267,7 +269,7 @@ public class OsmAndHelper {
 	 *
 	 * @param file - File which represents GPX track. Sent as URI parameter.
 	 */
-	public void showGpxFile(@NonNull File file) {
+	public void showGpxFile(File file) {
 		// test show gpx (path)
 		Map<String, String> params = new HashMap<>();
 		try {
@@ -314,7 +316,7 @@ public class OsmAndHelper {
 	 * @param file  - File which represents GPX track. Sent as URI parameter.
 	 * @param force - Stop previous navigation if active. Sent as URI parameter.
 	 */
-	public void navigateGpxFile(boolean force, @NonNull File file) {
+	public void navigateGpxFile(boolean force, File file) {
 		// test navigate gpx (file)
 		Map<String, String> params = new HashMap<>();
 		params.put(PARAM_FORCE, String.valueOf(force));
