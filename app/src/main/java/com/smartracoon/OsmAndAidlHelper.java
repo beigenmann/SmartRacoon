@@ -3,6 +3,7 @@ package com.smartracoon;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
@@ -114,7 +115,7 @@ public class OsmAndAidlHelper {
 	private static final String OSMAND_PLUS_PACKAGE_NAME = "net.osmand.plus";
 	private static final String OSMAND_PACKAGE_NAME = OSMAND_PLUS_PACKAGE_NAME;
 
-	private final Application app;
+	private final ContextWrapper app;
 	private final OnOsmandMissingListener mOsmandMissingListener;
 	private IOsmAndAidlInterface mIOsmAndAidlInterface;
 
@@ -256,7 +257,7 @@ public class OsmAndAidlHelper {
 		}
 	};
 
-	public OsmAndAidlHelper(Application application, OnOsmandMissingListener listener) {
+	public OsmAndAidlHelper(ContextWrapper application, OnOsmandMissingListener listener) {
 		this.app = application;
 		this.mOsmandMissingListener = listener;
 		bindService();
