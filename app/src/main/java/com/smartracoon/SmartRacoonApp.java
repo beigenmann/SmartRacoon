@@ -11,7 +11,6 @@ public class SmartRacoonApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         createNotificationChannel();
     }
 
@@ -19,7 +18,7 @@ public class SmartRacoonApp extends Application {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel = new NotificationChannel(
                     CHANNEL_ID,
-                    "Example Service Channel",
+                    "SmartRacoon Service",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
 
