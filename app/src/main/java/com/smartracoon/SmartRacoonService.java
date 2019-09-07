@@ -1,6 +1,5 @@
 package com.smartracoon;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -9,10 +8,7 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.widget.Toast;
-
-import java.net.URL;
 
 public class SmartRacoonService extends Service {
     public static final String inputExtra = "inputExtra";

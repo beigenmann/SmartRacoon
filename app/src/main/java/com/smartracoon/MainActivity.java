@@ -3,20 +3,12 @@ package com.smartracoon;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.smartracoon.utils.FileUtils;
 
@@ -55,6 +47,7 @@ public class MainActivity extends Activity {
         // Use the GET_CONTENT intent from the utility class
         Intent target = FileUtils.createGetContentIntent();
         // Create the chooser Intent
+
         Intent intent = Intent.createChooser(
                 target, getString(R.string.chooser_title));
         try {
