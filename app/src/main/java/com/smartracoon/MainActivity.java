@@ -42,7 +42,16 @@ public class MainActivity extends Activity {
     }
 
     public void showChooser(View v) {
-
+        // Use the GET_CONTENT intent from the utility class
+        Intent target = createGetContentIntent();
+        // Create the chooser Intent
+        Intent intent = Intent.createChooser(
+                target, getString(R.string.chooser_title));
+        try {
+            startActivityForResult(intent, REQUEST_CODE);
+        } catch (ActivityNotFoundException e) {
+            // The reason for the existence of aFileChooser
+        }
     }
 
     @Override
@@ -70,5 +79,20 @@ public class MainActivity extends Activity {
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    /**
+     * Get the Intent for selecting content to be used in an Intent Chooser.
+     *
+     * @return The intent for opening a file with Intent.createChooser()
+     * @author paulburke
+     */
+    public static Intent createGetContentIntent() {
+        // Implicitly allow the user to select a particular kind of data
+        final Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        // The MIME data type filter
+        intent.setType("*/*");
+        // Only return URIs that can be opened with ContentResolver
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        return intent;
     }
 }
