@@ -96,8 +96,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import com.smartracoon.OsmAndHelper.OnOsmandMissingListener;
 
+import com.smartracoon.OsmAndHelper.OnOsmandMissingListener;
 
 import static net.osmand.aidl.OsmandAidlConstants.BUFFER_SIZE;
 import static net.osmand.aidl.OsmandAidlConstants.COPY_FILE_IO_ERROR;
@@ -1550,8 +1550,7 @@ public class OsmAndAidlHelper {
 		byte[] data = new byte[(int) BUFFER_SIZE];
 		long retryInterval = COPY_FILE_MAX_LOCK_TIME_MS / 3;
 		long startTime = System.currentTimeMillis();
-		long fileSize = Utils.INSTANCE.getFileSize(app,uri);
-
+		long fileSize = Utils.INSTANCE.getFileSize(app, uri);
 		long readBytes = 0L;
 		double chunkSize = fileSize / 100;
 		int progressCounter = 0;

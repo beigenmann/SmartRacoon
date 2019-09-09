@@ -101,10 +101,10 @@ public class OsmAndHelper {
 	public static final String PARAM_CLOSE_AFTER_COMMAND = "close_after_command";
 
 	private final int mRequestCode;
-	private final Activity mActivity;
+	private final ContextWrapper mActivity;
 	private final OnOsmandMissingListener mOsmandMissingListener;
 
-	public OsmAndHelper(Activity activity, int requestCode, OnOsmandMissingListener listener) {
+	public OsmAndHelper(ContextWrapper activity, int requestCode, OnOsmandMissingListener listener) {
 		this.mRequestCode = requestCode;
 		mActivity = activity;
 		mOsmandMissingListener = listener;
@@ -494,7 +494,9 @@ public class OsmAndHelper {
 				intent.setClipData(clipData);
 			}
 			if (isIntentSafe(intent)) {
-				mActivity.startActivityForResult(intent, mRequestCode);
+				Intent[] i = {intent};
+				mActivity.startActivities(i);
+				//mActivity.startActivityForResult(intent, mRequestCode);
 			} else {
 				mOsmandMissingListener.osmandMissing();
 			}
@@ -512,7 +514,9 @@ public class OsmAndHelper {
 		try {
 			Intent intent = new Intent(Intent.ACTION_VIEW, fileUri);
 			if (isIntentSafe(intent)) {
-				mActivity.startActivityForResult(intent, mRequestCode);
+				Intent[] i = {intent};
+				mActivity.startActivities(i);
+				//mActivity.startActivityForResult(intent, mRequestCode);
 			} else {
 				mOsmandMissingListener.osmandMissing();
 			}

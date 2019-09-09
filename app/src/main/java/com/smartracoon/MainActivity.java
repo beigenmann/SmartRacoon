@@ -10,8 +10,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.EditText;
 
-import com.smartracoon.utils.FileUtils;
-
 public class MainActivity extends Activity {
 
 
@@ -44,17 +42,7 @@ public class MainActivity extends Activity {
     }
 
     public void showChooser(View v) {
-        // Use the GET_CONTENT intent from the utility class
-        Intent target = FileUtils.createGetContentIntent();
-        // Create the chooser Intent
 
-        Intent intent = Intent.createChooser(
-                target, getString(R.string.chooser_title));
-        try {
-            startActivityForResult(intent, REQUEST_CODE);
-        } catch (ActivityNotFoundException e) {
-            // The reason for the existence of aFileChooser
-        }
     }
 
     @Override
