@@ -11,24 +11,27 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 public class SmartRacoonService extends Service {
+    private static final int REQUEST_CODE = 6333; // onActivityResult request
     public static final String inputExtra = "inputExtra";
     public static final String inputGPX = "inputGPX";
     public static final String ACTION_START_FOREGROUND_SERVICE = "ACTION_START_FOREGROUND_SERVICE";
     public static final String ACTION_STOP_FOREGROUND_SERVICE = "ACTION_STOP_FOREGROUND_SERVICE";
     public static final String ACTION_GPX_SERVICE = "GPX_SERVICE";
-
+    private OsmAndHelper mOsmAndHelper;
     private OsmAndAidlHelper mOsmAndAidlHelper;
+    private OsmAndHelper.OnOsmandMissingListener mOnOsmandMissingListener;
 
     @Override
     public void onCreate() {
-
-        mOsmAndAidlHelper = new OsmAndAidlHelper(this, new OsmAndHelper.OnOsmandMissingListener() {
+        mOnOsmandMissingListener = new OsmAndHelper.OnOsmandMissingListener(){
 
             @Override
             public void osmandMissing() {
-                Toast.makeText(getApplicationContext(), "osmand failed", Toast.LENGTH_SHORT).show();
+
             }
-        });
+        };
+        mOsmAndAidlHelper = new OsmAndAidlHelper(this,mOnOsmandMissingListener);
+        mOsmAndHelper = new OsmAndHelper(this, REQUEST_CODE, mOnOsmandMissingListener);
         Toast.makeText(getApplicationContext(), "osmand Connected!", Toast.LENGTH_SHORT).show();
 
         super.onCreate();
