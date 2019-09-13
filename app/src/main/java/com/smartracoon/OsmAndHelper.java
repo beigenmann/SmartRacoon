@@ -20,6 +20,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT;
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+
+
 public class OsmAndHelper {
 	private static final String PREFIX = "osmand.api://";
 	private static final String OSMAND_FREE_PACKAGE_NAME = "net.osmand";
@@ -483,6 +488,8 @@ public class OsmAndHelper {
 		Uri uri = intentBuilder.getUri();
 			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 			intent.addFlags(intentBuilder.getFlags());
+			intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+			intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
 			Map<String, String> extraData = intentBuilder.getExtraData();
 			if (extraData != null) {
 				for (String key : extraData.keySet()) {

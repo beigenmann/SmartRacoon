@@ -10,6 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
+import net.osmand.aidl.navigation.ADirectionInfo;
+
 public class SmartRacoonService extends Service {
     private static final int REQUEST_CODE = 6333; // onActivityResult request
     public static final String inputExtra = "inputExtra";
@@ -20,6 +22,7 @@ public class SmartRacoonService extends Service {
     private OsmAndHelper mOsmAndHelper;
     private OsmAndAidlHelper mOsmAndAidlHelper;
     private OsmAndHelper.OnOsmandMissingListener mOnOsmandMissingListener;
+    private long callback = 3423;
 
     @Override
     public void onCreate() {
@@ -73,7 +76,20 @@ public class SmartRacoonService extends Service {
                             .build();
 
                     startForeground(1, notification);
-                    mOsmAndAidlHelper.navigateGpxFromUri(uri, true);
+                    //mOsmAndAidlHelper.navigateGpxFromUri(uri, true);
+
+                    mOsmAndHelper.navigateGpxUri(true, uri);
+                    mOsmAndHelper.muteNavigation();
+                    mOsmAndAidlHelper.setNavigationInfoUpdateListener(new OsmAndAidlHelper.NavigationInfoUpdateListener(){
+
+                        @Override
+                        public void onNavigationInfoUpdate(ADirectionInfo directionInfo) {
+                            int distance = directionInfo.getDistanceTo();
+                            int turntype = directionInfo.getTurnType();
+                            
+                        }
+                    });
+                    mOsmAndAidlHelper.registerForNavigationUpdates(true, callback);
                     break;
             }
         }
