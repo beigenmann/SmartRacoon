@@ -26,15 +26,48 @@ public class SmartRacoonService extends Service {
 
     @Override
     public void onCreate() {
-        mOnOsmandMissingListener = new OsmAndHelper.OnOsmandMissingListener(){
+        mOnOsmandMissingListener = new OsmAndHelper.OnOsmandMissingListener() {
 
             @Override
             public void osmandMissing() {
 
             }
         };
-        mOsmAndAidlHelper = new OsmAndAidlHelper(this,mOnOsmandMissingListener);
+
+        mOsmAndAidlHelper = new OsmAndAidlHelper(this, mOnOsmandMissingListener);
         mOsmAndHelper = new OsmAndHelper(this, REQUEST_CODE, mOnOsmandMissingListener);
+        mOsmAndAidlHelper.setNavigationInfoUpdateListener(new OsmAndAidlHelper.NavigationInfoUpdateListener() {
+
+            @Override
+            public void onNavigationInfoUpdate(ADirectionInfo directionInfo) {
+                int distance = directionInfo.getDistanceTo();
+                int turntype = directionInfo.getTurnType();
+                String direct ;
+                if(directionInfo.isLeftSide()){
+                    direct = "rechts";
+                }
+                else{
+                    direct = "links";
+                }
+                String dir = "Distance " + distance + "\n" + " " + turntype + " " + direct;
+                Intent notificationIntent = new Intent(SmartRacoonService.this, MainActivity.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(SmartRacoonService.this,
+                        0, notificationIntent, 0);
+
+
+                Notification notification = new NotificationCompat.Builder(SmartRacoonService.this, SmartRacoonApp.CHANNEL_ID)
+                        .setContentTitle("Direction")
+                        .setContentText(dir)
+                        .setSmallIcon(R.drawable.ic_racoon)
+                        .setContentIntent(pendingIntent)
+                        .build();
+
+                startForeground(1, notification);
+
+            }
+        });
+
+        //mOsmAndHelper.muteNavigation();
         Toast.makeText(getApplicationContext(), "osmand Connected!", Toast.LENGTH_SHORT).show();
 
         super.onCreate();
@@ -42,6 +75,7 @@ public class SmartRacoonService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
@@ -77,20 +111,16 @@ public class SmartRacoonService extends Service {
 
                     startForeground(1, notification);
                     //mOsmAndAidlHelper.navigateGpxFromUri(uri, true);
+                    mOsmAndAidlHelper.registerForNavigationUpdates(true, callback);
+                    mOsmAndHelper.muteNavigation();
 
                     mOsmAndHelper.navigateGpxUri(true, uri);
-                    mOsmAndHelper.muteNavigation();
-                    mOsmAndAidlHelper.setNavigationInfoUpdateListener(new OsmAndAidlHelper.NavigationInfoUpdateListener(){
 
-                        @Override
-                        public void onNavigationInfoUpdate(ADirectionInfo directionInfo) {
-                            int distance = directionInfo.getDistanceTo();
-                            int turntype = directionInfo.getTurnType();
-                            
-                        }
-                    });
-                    mOsmAndAidlHelper.registerForNavigationUpdates(true, callback);
+
+
                     break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + action);
             }
         }
 
